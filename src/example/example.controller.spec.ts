@@ -13,6 +13,9 @@ describe('ExampleController', () => {
     controller = module.get<ExampleController>(ExampleController);
   });
 
-  it('should be defined');
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+
   it('should return a list of examples');
 });
