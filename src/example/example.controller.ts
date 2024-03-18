@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { ExampleService } from './example.service';
 
 @Controller()
 export class ExampleController {
-  constructor(private readonly exampleService: ExampleService) {}
+  constructor(private readonly exampleService: ExampleService) { }
 
-  // @Get()
-  // getHello(): string {
-  //   return this.appService.getHello();
-  // }
+  @Get()
+  async getAllExamples(): Promise<any> {
+    return await this.exampleService.listAllExamples();
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 interface ExampleType {
     id: number,
@@ -10,8 +10,8 @@ interface ExampleType {
 export class ExampleService {
     constructor() { }
 
-    listAllExamples(): ExampleType[] {
-        return [{
+    async listAllExamples(): Promise<ExampleType[]> {
+        const mock = [{
             id: 1,
             name: 'ExampleName',
             description: 'This is an example'
@@ -21,5 +21,6 @@ export class ExampleService {
             name: 'ExampleName2',
             description: 'This is an example 2'
         }]
+        return mock;
     }
 }

@@ -40,7 +40,7 @@ describe('ExampleService', () => {
       name: 'ExampleName2',
       description: 'This is an example 2'
     }]
-    const examples = service.listAllExamples();
+    const examples = await service.listAllExamples();
     expect(examples).toEqual(exampleObject);
     expect(examples).toHaveLength(2);
   });
