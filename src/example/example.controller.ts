@@ -3,7 +3,7 @@ import { ExampleService } from './example.service';
 
 @Controller()
 export class ExampleController {
-  constructor(private readonly exampleService: ExampleService) { }
+  constructor(private readonly exampleService: ExampleService) {}
 
   @Get()
   async getAllExamples(): Promise<any> {
