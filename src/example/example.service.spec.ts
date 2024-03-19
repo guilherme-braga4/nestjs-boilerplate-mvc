@@ -1,15 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExampleController } from './example.controller';
 import { ExampleService } from './example.service';
+import { mockExamples } from './mocks/mock';
+import { ExampleRepository } from './repository/example.repository';
 
 describe('ExampleService', () => {
   let service: ExampleService;
 
+  const mockRepository = {
+    findAll: jest.fn().mockResolvedValue(mockExamples),
+  };
+
   //Config the service or injectables (service/repository)
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ExampleController],
-      providers: [ExampleService],
+      providers: [
+        ExampleService,
+        {
+          provide: ExampleRepository,
+          useValue: mockRepository,
+        },
+      ],
     }).compile();
 
     //Instance of service or injectables
@@ -29,21 +40,16 @@ describe('ExampleService', () => {
   */
 
   it('should list all examples', async () => {
-    // Red: Write a failing test
-    const exampleObject = [{
-      id: 1,
-      name: 'ExampleName',
-      description: 'This is an example'
-    },
-    {
-      id: 2,
-      name: 'ExampleName2',
-      description: 'This is an example 2'
-    }]
+    const findAllRepository = jest
+      .spyOn(mockRepository, 'findAll')
+      .mockResolvedValue(mockExamples);
+
     const examples = await service.listAllExamples();
-    expect(examples).toEqual(exampleObject);
+
+    expect(examples).toEqual(mockExamples);
     expect(examples).toHaveLength(2);
+
+    expect(findAllRepository).toHaveBeenCalled();
+    expect(findAllRepository).toBeCalledTimes(1);
   });
 });
-
-
