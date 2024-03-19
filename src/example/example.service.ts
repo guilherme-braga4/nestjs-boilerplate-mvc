@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ExampleRepository } from './repository/example.repository';
 
 interface ExampleType {
   id: number;
@@ -8,21 +9,9 @@ interface ExampleType {
 
 @Injectable()
 export class ExampleService {
-  constructor() {}
+  constructor(private exampleRepository: ExampleRepository) {}
 
   async listAllExamples(): Promise<ExampleType[]> {
-    const mock = [
-      {
-        id: 1,
-        name: 'ExampleName',
-        description: 'This is an example',
-      },
-      {
-        id: 2,
-        name: 'ExampleName2',
-        description: 'This is an example 2',
-      },
-    ];
-    return mock;
+    return await this.exampleRepository.findAll();
   }
 }
