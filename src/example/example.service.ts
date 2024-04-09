@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ExampleInterface } from './interfaces/example.interface';
 
 interface ExampleType {
   id: number;
@@ -7,10 +8,10 @@ interface ExampleType {
 }
 
 @Injectable()
-export class ExampleService {
-  constructor() {}
+export class ExampleService implements ExampleInterface {
+  constructor() { }
 
-  async listAllExamples(): Promise<ExampleType[]> {
+  async listAllExamples(): Promise<object[]> {
     const mock = [
       {
         id: 1,
