@@ -1,0 +1,51 @@
+version: '3.4'
+services:
+  api-dev:
+    env_file: .env.dev
+    build:
+      context: .
+      target: development
+    ports:
+      - 3000:3015
+    depends_on:
+      - db-dev
+    volumes:
+      - ./src:/usr/src/app/src
+
+  db-dev:
+    container_name: mysql-db-dev
+    hostname: example-mysql-db-dev
+    image: mysql/mysql-server:latest
+    restart: always
+    env_file:
+      - .env.dev
+    ports:
+      - "3306:3306"
+    networks:
+      - example-network
+
+  api-prod:
+    env_file: .env.prod
+    build:
+      context: .
+      target: production
+
+  db-prod:
+    container_name: mysql-db-prod
+    hostname: example-mysql-db-prod
+    image: mysql/mysql-server:latest
+    env_file:
+      - .env.prod
+    ports:
+      - "3306:3306"
+    networks:
+      - example-network
+    volumes:
+      - sqlserver-data:/var/opt/mysql
+      
+
+networks:
+  example-network:
+    driver: bridge
+volumes:
+  sqlserver-data:
