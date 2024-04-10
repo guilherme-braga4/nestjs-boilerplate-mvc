@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ExampleController } from './example/example.controller';
-import { ExampleService } from './example/example.service';
+import { ExampleController } from './modules/example/example.controller';
+import { ExampleService } from './modules/example/example.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -14,4 +14,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   providers: [ConfigService, ExampleService],
   exports: [ConfigService],
 })
-export class MainModule {}
+export class MainModule { }
