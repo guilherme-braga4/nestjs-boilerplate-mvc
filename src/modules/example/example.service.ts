@@ -1,29 +1,31 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { ExampleInterface } from './interfaces/example.interface';
-
-interface ExampleType {
-  id: number;
-  name: string;
-  description: string;
-}
+import { Injectable, Inject } from '@nestjs/common';
+import { ExampleServiceInterface, ExampleRepositoryInterface } from './interfaces/example.interface';
+import { ExampleRepository } from './repositories/example.repository';
 
 @Injectable()
-export class ExampleService implements ExampleInterface {
-  constructor() { }
+export class ExampleService implements ExampleServiceInterface {
+  constructor(
+    private exampleRepository: ExampleRepositoryInterface
+  ) { }
 
   async listAllExamples(): Promise<object[]> {
-    const mock = [
-      {
-        id: 1,
-        name: 'ExampleName',
-        description: 'This is an example',
-      },
-      {
-        id: 2,
-        name: 'ExampleName2',
-        description: 'This is an example 2',
-      },
-    ];
-    return mock;
+    return await this.exampleRepository.findAllExamples()
   }
+
+  async listExampleById(id: string): Promise<object> {
+    return await this.exampleRepository.findExampleById(id)
+  }
+
+  async createExample(dto: any): Promise<object> {
+    return await this.exampleRepository.createExample(dto)
+  }
+
+  async updateExample(id: string, dto: any): Promise<object> {
+    return await this.exampleRepository.updateExample(id, dto)
+  }
+
+  async deleteExample(id: string): Promise<void> {
+    return await this.exampleRepository.deleteExample(id)
+  }
+
 }
