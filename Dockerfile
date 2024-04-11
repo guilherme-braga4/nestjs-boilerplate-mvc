@@ -3,6 +3,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
+RUN npm install prisma
+COPY ./prisma ./prisma
+RUN npx prisma generate
 COPY ./src ./src
 CMD [ "npm", "run", "start:dev" ]
 
