@@ -11,31 +11,31 @@ export class PrismaRepository<T> extends AbstractRepository<T> {
     private readonly modelName: string;
     private readonly prisma: PrismaService;
 
-    constructor(modelName: string, prisma: PrismaService) {
+    protected constructor(modelName: string, prisma: PrismaService) {
         super();
         this.modelName = modelName
         this.prisma = prisma
     }
 
-    async findAll(): Promise<T[]> {
+    protected async findAll(): Promise<T[]> {
         //TO DO: Pagination
         //TO DO: Filter
 
         return await this.prisma[this.modelName].findMany();
     }
 
-    async findById(id: string): Promise<T | null> {
+    protected async findById(id: string): Promise<T | null> {
         const item = await this.prisma[this.modelName].findUnique({
             where: { id: parseInt(id) },
         });
         return item || null;
     }
 
-    async create(data: Partial<T>): Promise<T> {
+    protected async create(data: Partial<T>): Promise<T> {
         return await this.prisma[this.modelName].create({ data });
     }
 
-    async update(id: string, data: Partial<T>): Promise<T | null> {
+    protected async update(id: string, data: Partial<T>): Promise<T | null> {
         const updatedItem = await this.prisma[this.modelName].update({
             where: { id: parseInt(id) },
             data,
@@ -43,7 +43,7 @@ export class PrismaRepository<T> extends AbstractRepository<T> {
         return updatedItem || null;
     }
 
-    async delete(id: string): Promise<void> {
+    protected async delete(id: string): Promise<void> {
         await this.prisma[this.modelName].delete({ where: { id: parseInt(id) } });
     }
 }
