@@ -2,19 +2,21 @@ import { Module } from '@nestjs/common';
 import { ExampleController } from './example.controller';
 import { ExampleService } from './example.service';
 import { ExampleRepository } from './repositories/example.repository';
+import { PrismaModule } from 'src/database/prisma.module';
+import { IExampleRepository } from './interfaces/example.interface'
 
 @Module({
-  imports: [],
+  imports: [PrismaModule],
   controllers: [ExampleController],
   providers: [
     ExampleService,
     {
-      provide: 'ExampleServiceInterface', // Token de injeção como string
+      provide: 'IExampleService', // Token de injeção como string
       useClass: ExampleService,
     },
     ExampleRepository,
     {
-      provide: 'ExampleRepositoryInterface', // Token de injeção como string
+      provide: 'IExampleRepository', // Token de injeção como string
       useClass: ExampleRepository,
     },
   ],

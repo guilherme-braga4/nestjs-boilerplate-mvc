@@ -1,4 +1,4 @@
-export interface ExampleServiceInterface {
+export interface IExampleService {
     listAllExamples(): Promise<object[]>
     listExampleById(id: string): Promise<object>
     createExample(dto: any): Promise<object>
@@ -6,7 +6,7 @@ export interface ExampleServiceInterface {
     deleteExample(id: string): Promise<void>
 }
 
-export interface ExampleRepositoryInterface {
+export interface IExampleRepository {
     findAllExamples(): Promise<object[]>
     findExampleById(id: string): Promise<object>
     createExample(dto: any): Promise<object>

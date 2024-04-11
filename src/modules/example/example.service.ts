@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { ExampleServiceInterface, ExampleRepositoryInterface } from './interfaces/example.interface';
+import { IExampleService, IExampleRepository } from './interfaces/example.interface';
 import { ExampleRepository } from './repositories/example.repository';
 
 @Injectable()
-export class ExampleService implements ExampleServiceInterface {
+export class ExampleService implements IExampleService {
   constructor(
-    private exampleRepository: ExampleRepositoryInterface
+    private exampleRepository: IExampleRepository
   ) { }
 
   async listAllExamples(): Promise<object[]> {
