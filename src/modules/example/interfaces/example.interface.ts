@@ -13,3 +13,6 @@ export interface IExampleRepository {
     updateExample(id: string, dto: any): Promise<object>
     deleteExample(id: string): Promise<void>
 }
+
+export const IExampleService = Symbol("IExampleService");
+export const IExampleRepository = Symbol("IExampleRepository");

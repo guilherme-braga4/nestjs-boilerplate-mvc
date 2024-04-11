@@ -1,9 +1,12 @@
-import { BadRequestException, Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Post, Param, Body, Put, Delete, Inject } from '@nestjs/common';
 import { IExampleService } from './interfaces/example.interface';
 
 @Controller('example')
 export class ExampleController {
-  constructor(private readonly exampleService: IExampleService) { }
+  constructor(
+    @Inject(IExampleService)
+    private readonly exampleService: IExampleService
+  ) { }
 
   @Get()
   async getAllExamples(): Promise<any> {

@@ -5,6 +5,7 @@ import { ExampleRepository } from './repositories/example.repository';
 @Injectable()
 export class ExampleService implements IExampleService {
   constructor(
+    @Inject(IExampleRepository)
     private exampleRepository: IExampleRepository
   ) { }
 

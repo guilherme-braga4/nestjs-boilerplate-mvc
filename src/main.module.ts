@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ExampleController } from './modules/example/example.controller';
-import { ExampleService } from './modules/example/example.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ExampleModule } from './modules/example/example.module';
 
 @Module({
   imports: [
@@ -9,9 +8,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       envFilePath: ['.env.dev', '.env.prod'],
       isGlobal: true,
     }),
+    ExampleModule
   ],
-  controllers: [ExampleController],
-  providers: [ConfigService, ExampleService],
+  providers: [ConfigService],
   exports: [ConfigService],
 })
 export class MainModule { }
