@@ -8,6 +8,10 @@ import { ExampleRepository } from './repositories/example.repository';
   controllers: [ExampleController],
   providers: [
     ExampleService,
+    {
+      provide: 'ExampleServiceInterface', // Token de injeção como string
+      useClass: ExampleService,
+    },
     ExampleRepository,
     {
       provide: 'ExampleRepositoryInterface', // Token de injeção como string
