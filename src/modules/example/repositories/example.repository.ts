@@ -1,11 +1,11 @@
-import { AbstractRepository } from "src/repositories/abstract.repository";
 import { PrismaRepository } from "src/repositories/prisma.repository";
 import { Example } from '@prisma/client'
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
+import { ExampleRepositoryInterface } from "../interfaces/example.interface";
 
 @Injectable()
-export class ExampleRepository extends PrismaRepository<Example> {
+export class ExampleRepository extends PrismaRepository<Example> implements ExampleRepositoryInterface {
     constructor(prisma: PrismaService) {
         super('Example', prisma);
     }
