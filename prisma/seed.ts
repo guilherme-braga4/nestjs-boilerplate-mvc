@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
+import { Logger } from '@nestjs/common';
 
 const prisma = new PrismaClient()
+const logger = new Logger('Example Seed')
 
 async function main() {
     const example = await prisma.example.create({
@@ -8,17 +10,17 @@ async function main() {
             name: 'alice@prisma.io',
         },
     })
-    console.log({ example })
 }
+
 main()
     .then(async () => {
-        console.error("🌱 Start to seed the database...")
+        logger.log("🌱 Start to seed the database...")
         await prisma.$disconnect()
-        console.error("Prisma Client disconnected after seed the database")
+        logger.log("Prisma Client disconnected after seed the database")
     })
     .catch(async (e) => {
-        console.error("Error on seed database: ", e)
+        logger.log("Error on seed database: ", e)
         await prisma.$disconnect()
-        console.error("Prisma Client disconnected after error: ", e)
+        logger.log("Prisma Client disconnected after error: ", e)
         process.exit(1)
     })
