@@ -1,8 +1,10 @@
 //Responsible Class by ORMs: TypeORM / Prisma / etc
 //You can implement any ORM you wanna
 
+import { PaginationDto } from 'src/dtos/pagination.dto';
 import { PrismaService } from '../database/prisma.service';
 import { AbstractRepository } from './abstract.repository';
+import { FilterDto } from 'src/dtos/filter.dto';
 
 // <T> é indica uma classe com tipo genérico
 // A classe que implementar o PrismaRepository necessita passar o tipo genérico, por ex: class UserRepository extends PrismaRepository<User>
@@ -17,11 +19,33 @@ export class PrismaRepository<T> extends AbstractRepository<T> {
         this.prisma = prisma
     }
 
-    protected async findAll(): Promise<T[]> {
-        //TO DO: Pagination
-        //TO DO: Filter
+    protected async findAll({ page, pageSize, limit }: PaginationDto, { filterName, filterValue }: FilterDto): Promise<{ data: T[], page: number, pageSize: number, totalPages: number, totalData: number }> {
+        let query: any = {};
 
-        return await this.prisma[this.modelName].findMany();
+        if (filterName && filterValue) {
+            query[filterName] = { contains: filterValue };
+        }
+
+        const skip = (page - 1) * pageSize;
+        const paginationOptions = {
+            skip,
+            take: Number(pageSize)
+        };
+        const data = await this.prisma[this.modelName].findMany({
+            where: query,
+            ...paginationOptions
+        });
+
+        const totalData = await this.prisma[this.modelName].count({ where: query });
+        const totalPages = Math.ceil(totalData / pageSize);
+
+        return {
+            data,
+            page,
+            pageSize,
+            totalPages,
+            totalData
+        };
     }
 
     protected async findById(id: string): Promise<T | null> {

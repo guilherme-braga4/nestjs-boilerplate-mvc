@@ -1,5 +1,9 @@
+import { PaginationDto } from "src/dtos/pagination.dto"
+import { PaginatedResponseExampleDto, ResponseExampleDto } from "../dtos/example.dto"
+import { FilterDto } from "src/dtos/filter.dto"
+
 export interface IExampleService {
-    listAllExamples(): Promise<object[]>
+    listAllExamples(pagination?: PaginationDto, filter?: FilterDto): Promise<PaginatedResponseExampleDto>
     listExampleById(id: string): Promise<object>
     createExample(dto: any): Promise<object>
     updateExample(id: string, dto: any): Promise<object>
@@ -7,7 +11,7 @@ export interface IExampleService {
 }
 
 export interface IExampleRepository {
-    findAllExamples(): Promise<object[]>
+    findAllExamples(pagination?: PaginationDto, filter?: FilterDto): Promise<PaginatedResponseExampleDto>
     findExampleById(id: string): Promise<object>
     createExample(dto: any): Promise<object>
     updateExample(id: string, dto: any): Promise<object>

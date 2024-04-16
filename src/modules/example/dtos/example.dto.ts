@@ -11,13 +11,23 @@ export class RequestExampleDto {
 
 //DTO to response only the necessary output data to client
 export class ResponseExampleDto {
+    //Declare all input properties to use as a dumb input object
     readonly id: number;
     readonly name: string;
 
     constructor(dto) {
+        // Assign only the real important attributes to use as a output shape object
         this.id = dto.id;
         this.name = dto.name
     }
+}
+
+export class PaginatedResponseExampleDto {
+    readonly data: ResponseExampleDto[];
+    readonly page: number;
+    readonly pageSize: number;
+    readonly totalPages: number;
+    readonly totalData: number;
 }
 
 //DTO to update any attribute that has been created before

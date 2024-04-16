@@ -3,6 +3,9 @@ import { Example } from '@prisma/client'
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 import { IExampleRepository } from "../interfaces/example.interface";
+import { PaginatedResponseExampleDto, ResponseExampleDto } from "../dtos/example.dto";
+import { PaginationDto } from "src/dtos/pagination.dto";
+import { FilterDto } from "src/dtos/filter.dto";
 
 @Injectable()
 export class ExampleRepository extends PrismaRepository<Example> implements IExampleRepository {
@@ -10,8 +13,8 @@ export class ExampleRepository extends PrismaRepository<Example> implements IExa
         super('Example', prisma);
     }
 
-    async findAllExamples() {
-        return this.findAll()
+    async findAllExamples(pagination: PaginationDto, filter: FilterDto): Promise<PaginatedResponseExampleDto> {
+        return await this.findAll(pagination, filter)
     }
 
     async findExampleById(id: string) {

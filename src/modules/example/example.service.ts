@@ -1,6 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IExampleService, IExampleRepository } from './interfaces/example.interface';
 import { ExampleRepository } from './repositories/example.repository';
+import { PaginatedResponseExampleDto, ResponseExampleDto } from './dtos/example.dto';
+import { PaginationDto } from 'src/dtos/pagination.dto';
+import { FilterDto } from 'src/dtos/filter.dto';
 
 @Injectable()
 export class ExampleService implements IExampleService {
@@ -9,8 +12,8 @@ export class ExampleService implements IExampleService {
     private exampleRepository: IExampleRepository
   ) { }
 
-  async listAllExamples(): Promise<object[]> {
-    return await this.exampleRepository.findAllExamples()
+  async listAllExamples(pagination: PaginationDto, filter: FilterDto): Promise<PaginatedResponseExampleDto> {
+    return await this.exampleRepository.findAllExamples(pagination, filter)
   }
 
   async listExampleById(id: string): Promise<object> {
