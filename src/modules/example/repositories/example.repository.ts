@@ -18,18 +18,18 @@ export class ExampleRepository extends PrismaRepository<Example> implements IExa
     }
 
     async findExampleById(id: string) {
-        return this.findById(id)
+        return await this.findById(id)
     }
 
     async createExample(data: Example) {
-        return this.create(data)
+        return await this.create(data)
     }
 
     async updateExample(id: string, data: Partial<Example>) {
-        return this.update(id, data)
+        return await this.update(id, data)
     }
 
     async deleteExample(id: string) {
-        return this.delete(id)
+        return await this.delete(id)
     }
 }
