@@ -5,10 +5,16 @@
 **Version 1.0.0:**
 
 **Features:** 
-- *MVC architecture*
-- *Service-Repository (Mocked Data - fakerjs) design pattern*
-- *Unit tests*
-- *Docker*
-- *Error message handling*
-- *Database seed*
-- *CORS config*
+- *→MVC architecture*
+- *→Service-Repository*
+- *→SOLID pattern*
+- *→Unit tests (CRUD)*
+- *→Docker (API and Database)*
+- *→Error message handling*
+- *→CORS config*
+- *→Swagger*
+- *→ORM*
+- *→Database*
+- *→Database seed*
+- *→Abstract Repository*
+- *→DRY (Don’t Repeat Yourself)*
