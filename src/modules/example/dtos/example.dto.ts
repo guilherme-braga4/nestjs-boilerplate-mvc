@@ -4,6 +4,10 @@ import { PartialType } from '@nestjs/mapped-types';
 
 //DTO to validate input data from request from client
 export class RequestExampleDto {
+    /**
+     * The name of examploe
+     * @example 'Guilherme'
+    */
     @IsString()
     @IsNotEmpty()
     readonly name: string
