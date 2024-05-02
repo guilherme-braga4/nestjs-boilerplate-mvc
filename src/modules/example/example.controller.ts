@@ -3,6 +3,7 @@ import { IExampleService } from './interfaces/example.interface';
 import { PaginationDto } from 'src/dtos/pagination.dto';
 import { FilterDto } from 'src/dtos/filter.dto';
 import { PaginatedResponseExampleDto, RequestExampleDto, ResponseExampleDto, UpdateExampleDto } from './dtos/example.dto';
+import { ApiBadRequestResponse } from '@nestjs/swagger';
 
 @Controller('example')
 export class ExampleController {
@@ -22,6 +23,7 @@ export class ExampleController {
   }
 
   @Post()
+  @ApiBadRequestResponse()
   async createExample(@Body() dto: RequestExampleDto): Promise<object> {
     return await this.exampleService.createExample(dto);
   }
