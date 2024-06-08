@@ -14,6 +14,7 @@
     "start:prod": "cross-env NODE_ENV=production node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "seed": "ts-node --transpile-only prisma/seed.ts",
+    "prisma:dbpush": "dotenv -e .env.dev -- npx prisma db push",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -32,7 +33,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
-    "dotenv-cli": "^7.4.1",
+    "dotenv-cli": "^7.4.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },

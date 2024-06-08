@@ -5,6 +5,7 @@ import { PaginationDto } from 'src/dtos/pagination.dto';
 import { PrismaService } from '../database/prisma.service';
 import { AbstractRepository } from './abstract.repository';
 import { FilterDto } from 'src/dtos/filter.dto';
+import { BadRequestException } from '@nestjs/common';
 
 // <T> é indica uma classe com tipo genérico
 // A classe que implementar o PrismaRepository necessita passar o tipo genérico, por ex: class UserRepository extends PrismaRepository<User>
@@ -52,6 +53,9 @@ export class PrismaRepository<T> extends AbstractRepository<T> {
         const item = await this.prisma[this.modelName].findUnique({
             where: { id: parseInt(id) },
         });
+        if (!item) {
+            throw new BadRequestException('No register found!')
+        }
         return item || null;
     }
 
