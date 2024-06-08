@@ -1,21 +1,29 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-    catch(exception: HttpException, host: ArgumentsHost) {
-        const ctx = host.switchToHttp();
-        const response = ctx.getResponse<Response>();
-        const request = ctx.getRequest<Request>();
-        const status = exception.getStatus();
+@Injectable()
+export class AppInterceptor implements NestInterceptor {
+    constructor() { }
+    async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
+        return next.handle().pipe(
+            catchError((err) => {
+                const request: Request = context.switchToHttp().getRequest();
 
-        response
-            .status(status)
-            .json({
-                statusCode: status,
-                message: exception.message,
-                timestamp: new Date().toISOString(),
-                path: request.url,
-            });
+                return throwError(
+                    () =>
+                        new HttpException(
+                            {
+                                message: err?.message || err?.detail || 'Something went wrong',
+                                timestamp: new Date().toISOString(),
+                                route: request.path,
+                                method: request.method
+                            },
+                            err.statusCode || 500
+                        )
+                );
+            })
+        );
     }
 }
